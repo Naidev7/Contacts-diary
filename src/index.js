@@ -1,16 +1,22 @@
+//dependency imports
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-// Arracar el servidor
+// Start server
 const server = express();
 
-// Configuración del servidor
+// Config server
 server.use(cors());
 server.use(express.json({ limit: '25mb' }));
 
-//config puerto
+//config port
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Ya se ha arrancado nuestro servidor: http://localhost:${port}/`);
 });
+
+//Import and start connection
+const dbConnect = require('../config/connection');
+dbConnect();
+
