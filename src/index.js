@@ -20,3 +20,14 @@ server.listen(port, () => {
 const dbConnect = require('../config/connection');
 dbConnect();
 
+//model imports
+const Contacts = require('../models/contacts');
+const Users = require('../models/users');
+
+//import functions endpoints
+
+
+server.post("/registrer", asyn  (req, res) = {
+  const { name, email, adress, password } = req.body;
+
+})
