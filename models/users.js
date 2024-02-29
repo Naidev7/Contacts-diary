@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const userShema = new Schema(
     {
         name: {type: String, require: true},
-        email: {type: String, require: true},
+        email: {type: String, unique: true, require: true},
         adress: {type: String },
-        password: {type: String, require: true}
+        password: {type: String, require: true},
+        relator: [{type: Schema.Types.ObjectId, ref: 'contacts_db'}]
     },
     { collection: "users_db" }
 );
