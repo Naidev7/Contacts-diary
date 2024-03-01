@@ -4,10 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const swaggerUI = require('swagger-ui-express');
-const swaggerConfig  = require('./swagger.json');
-
-
+const swaggerUI = require("swagger-ui-express");
+const swaggerConfig = require("./swagger.json");
 
 // Start server
 const server = express();
@@ -35,8 +33,12 @@ const Users = require("../models/users");
 
 //JWT functions
 const generateToken = (data) => {
-  const token = jwt.sign(data, "secreto", { expiresIn: "1h" });
-  return token;
+  try {
+    const token = jwt.sign(data, "secreto");
+    return token;
+  } catch (error) {
+    console.log(error)
+  }
 };
 const verifyToken = (token) => {
   try {
@@ -89,12 +91,10 @@ server.get("/getContacts", authenticateToken, async (req, res) => {
 
     res.status(200).json({ success: true, data: contactsList });
   } catch (e) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: false,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("server error", e);
   }
 });
@@ -102,8 +102,10 @@ server.get("/getContacts", authenticateToken, async (req, res) => {
 //add contacts endpoint: create
 server.post("/addContacts", authenticateToken, async (req, res) => {
   try {
+
     const { name, telf, email } = req.body;
-    console.log(name, telf, email);
+
+    const userId = req.user.id;
 
     const existContact = await Contacts.findOne({ email: email });
 
@@ -112,6 +114,7 @@ server.post("/addContacts", authenticateToken, async (req, res) => {
         name: name,
         telf: telf,
         email: email,
+        relator: userId
       });
 
       res.status(200).json({ success: true, msj: "Added correctly" });
@@ -122,12 +125,10 @@ server.post("/addContacts", authenticateToken, async (req, res) => {
         .json({ success: false, msj: "oops, error with the data entered" });
     }
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: true,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: true,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("failed conection");
   }
 });
@@ -143,12 +144,10 @@ server.get("/sortContacts", authenticateToken, async (req, res) => {
       res.status(200).json({ success: true, data: sortedContacts });
     }
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: true,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: true,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("failed conection");
   }
 });
@@ -157,66 +156,66 @@ server.get("/sortContacts", authenticateToken, async (req, res) => {
 server.put("/updateContacts", authenticateToken, async (req, res) => {
   try {
     const { email, newName, newTelf, newEmail } = req.body;
+    const userId = req.user.id;
 
-      const updateContacts = await Contacts.findOneAndUpdate(
-        {email: email}, 
-        {
-          $set:{
-            name: newName,
-            telf: newTelf,
-            email: newEmail,
-          }
+    const updateContacts = await Contacts.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          name: newName,
+          telf: newTelf,
+          email: newEmail,
+          relator: userId
+        },
       },
-      {new: true}
-      );
-      
-      if(updateContacts){
-        res
+      { new: true }
+    );
+
+    if (updateContacts) {
+      res
         .status(200)
         .json({ success: true, msj: "Correct update", data: updateContacts });
 
-        console.log('update correct', updateContacts);
-      } else{
-        res
+      console.log("update correct", updateContacts);
+    } else {
+      res
         .status(400)
-        .json({success: false, msj: 'Failed update, please verify credentials'});
-        console.log('error update')
-      }
-
+        .json({
+          success: false,
+          msj: "Failed update, please verify credentials",
+        });
+      console.log("error update");
+    }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        success: true,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: true,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("failed conection");
   }
 });
 
 //Delete endpoint
-server.post('/deleteContact', authenticateToken, async (req, res)=>{
+server.post("/deleteContact", authenticateToken, async (req, res) => {
   try {
+    const userId = req.user.id;
     const { email } = req.body;
 
-    const deleteContacts = await Contacts.deleteOne( {email: email} );
+    const deleteContacts = await Contacts.deleteOne({ email: email, id: userId });
 
-    if(deleteContacts){
-      res.status(200).json({success: true, msj: 'Correct delate'})
-    }else{
-      res.status(400).json({success: false, msj: 'Failed delate'})
+    if (deleteContacts) {
+      res.status(200).json({ success: true, msj: "Correct delate" });
+    } else {
+      res.status(400).json({ success: false, msj: "Failed delate" });
     }
-    
   } catch (error) {
-    console.log('faied detale')
-    res
-    .status(400)
-    .json({success: false, msj:'Failed delete'});
-  };
-
-})
+    console.log("faied detale");
+    res.status(400).json({ success: false, msj: "Failed delete" });
+  }
+});
 
 server.post("/registrer", async (req, res) => {
+  console.log(req.body);
   try {
     const { name, email, adress, password } = req.body;
     const isRegistrer = Users.findOne({ email: email });
@@ -232,12 +231,10 @@ server.post("/registrer", async (req, res) => {
         });
         res.status(200).json({ success: true, msj: "Corrrect registrer" });
       } else {
-        res
-          .status(500)
-          .json({
-            success: false,
-            msj: "error creating data, please try again",
-          });
+        res.status(500).json({
+          success: false,
+          msj: "error creating data, please try again",
+        });
       }
     } else {
       res
@@ -245,12 +242,10 @@ server.post("/registrer", async (req, res) => {
         .json({ success: false, msj: "oops, error with the data entered" });
     }
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: true,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: true,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("failed conection");
   }
 });
@@ -259,13 +254,14 @@ server.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const isLoged = await Users.findOne({ email: email });
-    console.log("lo que me tare de bbdd es: ", typeof isLoged);
+    console.log('isloged? ', isLoged)
 
     if (!isLoged) {
       res.status(400).json({ success: false, msj: "User not found" });
     }
 
     const matchPassword = await bcrypt.compare(password, isLoged.password); //compare password
+    console.log('matchPass? ', matchPassword)
 
     if (matchPassword) {
       //passsword is ok?
@@ -273,7 +269,11 @@ server.post("/login", async (req, res) => {
         email: isLoged.email,
         id: isLoged.id,
       };
+      console.log('infoToken? ', infoToken)
+
       const token = generateToken(infoToken);
+      console.log('token? ', token)
+      
       res.status(200).json({ success: true, token: token });
       console.log("token: ", token);
     } else {
@@ -283,12 +283,10 @@ server.post("/login", async (req, res) => {
       console.log("password error");
     }
   } catch (e) {
-    res
-      .status(500)
-      .json({
-        success: true,
-        msj: "sorry the server is down, please try again later",
-      });
+    res.status(500).json({
+      success: false,
+      msj: "sorry the server is down, please try again later",
+    });
     console.log("failed conection");
   }
 });

@@ -1,19 +1,29 @@
+import { useState } from "react";
+import callToApi from "../../services/dataApi";
 
+function Registrer( {handleUsers, handleAddUser, registrer} ) {
 
-function Registrer( {handleUsers, handleAddUser} ) {
+    const [token, setToken] = useState({});
 
     const handleSubmit = (e)=>{
         e.preventDefault();
         console.log('enviado');
         handleUsers();
+
+        console.log(registrer)
+        callToApi(registrer).then((data)=>{
+            console.log(data)
+            setToken(data.token)
+        }); 
     };
 
     const handleRegistrer = (e)=>{
         const id = e.target.id;
         const value = e.target.value;
         handleAddUser(id, value);
-    }
+    };
 
+    
   return (
     <section>
         <h1>Registro</h1>
