@@ -1,0 +1,202 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Agenda de contactos API",
+      "version": "1.0.0",
+      "description": "API para la gestión contactos"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "API gestión de contactos"
+      }
+    ],
+    "paths": {
+      "/getContacts": {
+        "get": {
+          "summary": "List all contacts",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean"
+                      },
+                      "projects": {
+                        "type": "object",
+                        "items": {
+                          "$ref": "#/components/schemas/Project"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/addContacts": {
+        "post": {
+          "summary": "Create a new contact",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewProject"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contact created successfully"
+            }
+          }
+        }
+      },
+      "/sortContacts": {
+        "get": {
+          "summary": "Order and filter names by ASC",
+          "parameters": [
+            {
+              "name": "sortContacts",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "object"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation"
+            },
+            "404": {
+              "description": "Contact not found"
+            }
+          }
+        }
+      },
+      "/updateContacts": {
+        "put": {
+          "summary": "Update contact",
+          "parameters": [
+            {
+              "name": "updateContacts",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Correct update"
+            },
+            "404": {
+              "description": "Failed update"
+            }
+          }
+        }
+      },
+      "/delateContacts": {
+        "put": {
+          "summary": "Delate contact",
+          "parameters": [
+            {
+              "name": "delateContacts",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Correct delate"
+            },
+            "404": {
+              "description": "Failed delate"
+            }
+          }
+        }
+      },
+      "/registrer": {
+        "put": {
+          "summary": "Registrer contacts",
+          "parameters": [
+            {
+              "name": "registrer contacts",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Correct registrer"
+            },
+            "404": {
+              "description": "Failed registrer"
+            }
+          }
+        }
+      },
+      "/login": {
+        "put": {
+          "summary": "Login contacts",
+          "parameters": [
+            {
+              "name": "Login contacts",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "object"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Correct login"
+            },
+            "404": {
+              "description": "Failed login"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Project": {
+          "type": "object",
+          "properties": {
+            "idProject": {
+              "type": "integer"
+            }
+          }
+        },
+        "NewProject": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "slogan": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
