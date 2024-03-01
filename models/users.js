@@ -7,6 +7,7 @@ const userShema = new Schema(
         email: {type: String, unique: true, require: true},
         adress: {type: String },
         password: {type: String, require: true},
+        relator: [{type: Schema.Types.ObjectId, ref: 'users_db'}]
     },
     { collection: "users_db" }
 );

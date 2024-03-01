@@ -53,7 +53,7 @@ const verifyToken = (token) => {
 //middleware
 const authenticateToken = (req, res, next) => {
   const tokenBarrer = req.headers["authorization"];
-  console.log(tokenBarrer);
+
 
   const token = tokenBarrer.split(" ")[1]; //separate token, eliminate barrer and save token
 
@@ -65,7 +65,6 @@ const authenticateToken = (req, res, next) => {
   const decoded = verifyToken(token);
 
   if (!decoded) {
-    console.log(decoded);
     return res.status(401).json({ error: "invalid token" });
   }
 
@@ -86,7 +85,6 @@ server.get("/getContacts", authenticateToken, async (req, res) => {
         .status(500)
         .json({ success: false, msj: "Not contacts found" })
         .redirect("/addContacts");
-      console.log("not existing contacts");
     }
 
     res.status(200).json({ success: true, data: contactsList });
@@ -136,12 +134,15 @@ server.post("/addContacts", authenticateToken, async (req, res) => {
 //filter endpoint by order name
 server.get("/sortContacts", authenticateToken, async (req, res) => {
   try {
-    const sortedContacts = await Contacts.find()
+    const idUser = req.user.id;
+    const sortedContacts = await Contacts.find({relator: idUser})
       .sort({ name: 1 })
       .collation({ locale: "en", caseLevel: true }); //sort: order => collection: specify collection => local: language => casLevel: Mayus/minus
 
     if (sortedContacts) {
       res.status(200).json({ success: true, data: sortedContacts });
+    }else{
+      res.status(400).json({success: false, msj: 'Users not found'})
     }
   } catch (err) {
     res.status(500).json({
@@ -157,6 +158,7 @@ server.put("/updateContacts", authenticateToken, async (req, res) => {
   try {
     const { email, newName, newTelf, newEmail } = req.body;
     const userId = req.user.id;
+    console.log(userId)
 
     const updateContacts = await Contacts.findOneAndUpdate(
       { email: email },
@@ -165,11 +167,12 @@ server.put("/updateContacts", authenticateToken, async (req, res) => {
           name: newName,
           telf: newTelf,
           email: newEmail,
-          relator: userId
         },
       },
       { new: true }
     );
+
+      console.log('update? ', updateContacts)
 
     if (updateContacts) {
       res
