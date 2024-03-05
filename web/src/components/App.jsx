@@ -1,6 +1,5 @@
 import "../styles/_App.scss";
 import { Route, Routes } from "react-router-dom";
-import Filter from "../components/Filter/Filter";
 import ContactsList from "../components/ContactsList/ContactList";
 import data from "../services/data.json";
 import { useState } from "react";
@@ -64,11 +63,9 @@ function App() {
 
         <Route path="/login" element={<Login/>}/>
 
-        <Route path="/filter" element={<Filter SetFiltered={SetFiltered} />} />
-
         <Route
           path="/contacts"
-          element={<ContactsList searchContacts={searchContacts} />}
+          element={<ContactsList searchContacts={searchContacts} SetFiltered={SetFiltered} />}
         />
 
         <Route
