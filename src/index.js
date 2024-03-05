@@ -223,13 +223,13 @@ server.post("/registrer", async (req, res) => {
     if (isRegistrer) {
       const passwordHashed = await bcrypt.hash(password, 10);
       if (passwordHashed) {
-        Users.create({
+        const registerData = await Users.create({
           name: name,
           email: email,
           adress: adress,
           password: passwordHashed,
         });
-        res.status(200).json({ success: true, msj: "Corrrect registrer" });
+        res.status(200).json({ success: true, msj: "Corrrect registrer", data: registerData.name });
       } else {
         res.status(500).json({
           success: false,
@@ -243,7 +243,7 @@ server.post("/registrer", async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       msj: "sorry the server is down, please try again later",
     });
     console.log("failed conection");
