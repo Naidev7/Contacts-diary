@@ -62,7 +62,7 @@ function App() {
               registrer={registrer}
             />}/>
 
-        <Route path="/login"/>
+        <Route path="/login" element={<Login/>}/>
 
         <Route path="/filter" element={<Filter SetFiltered={SetFiltered} />} />
 

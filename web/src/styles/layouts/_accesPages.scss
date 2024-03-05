@@ -60,7 +60,6 @@
     text-align: center;
     text-transform: capitalize;
     font-size: 12px;
-    color: rgba(185, 185, 185, 0.691);
   }
   &__btn{
     width: 100px;
@@ -73,11 +72,24 @@
     padding: 10px;
     font-weight: 700;
     cursor: pointer;
+    text-transform: capitalize;
   }
   &__btn:hover{
     transform: scale(1.1);
   }
+
+  &__pass{
+    position: relative;
+  }
+  &__icon{
+    position: absolute;
+    left: 85%;
+    top:52%;
+    color: #2552ad;
+    background-color: none;
+  }
 }
+
 .textToLogin{
    text-align: center;
    color: rgb(138, 138, 138);
@@ -109,6 +121,17 @@
         top: 45%;
         width: 80vw;
     }
+    .form{
+      &__pass{
+        position: relative;
+      }
+      &__icon{
+        left: 75%;
+      }
+    }
+    .login{
+      height: 48vh;
+    }
 }
 @media (max-width: 400px) {
     .hero{
@@ -123,6 +146,14 @@
         top: 25%;
         width: 80vw;
     }
+    .form{
+      &__pass{
+        position: relative;
+      }
+      &__icon{
+        left: 70%;
+      }
+    }
 }
 @media (max-width: 320px) {
     .register{
@@ -135,8 +166,24 @@
             font-size: 32px;
         }
     }
+    .login{
+      height: 55vh;
+    }
     .form__input{
-        width: 40vw;
+        width: 50vw;
         height: 30px;
     }
+    .form__input::placeholder{
+      font-size: 12px;
+    }
+    .form{
+      &__pass{
+        position: relative;
+      }
+      &__icon{
+        left: 73%;
+        font-size: 12px;
+      }
+    }
 }
+

@@ -36,7 +36,7 @@ function Registrer({ handleUsers, handleAddUser, registrer }) {
         <img src="../../public/signupImg.png" alt="#" />
     </article>
       <article className="register">
-        <h1 className="register__title">Sign up</h1>
+        <h1 className="register__title">Register</h1>
         <p className="register__subtitle">Please fill in this form to create acount</p>
 
         <form onSubmit={handleSubmit} className="form">
