@@ -1,10 +1,8 @@
-/* eslint-disable no-inner-declarations */
+
 import Contacts from "./Contacts";
-import getContacts from "../../services/getContacts";
-import { useEffect } from "react";
 
-function ContactList({ searchContacts, setFiltered, saveToken }) {
 
+function ContactList({ searchContacts, setFiltered }) {
 
   return (
     <section className="section">

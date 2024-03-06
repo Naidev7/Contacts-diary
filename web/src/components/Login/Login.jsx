@@ -9,7 +9,7 @@ function Login( { handleLogin, setSaveToken, isLogin } ) {
   const [goToHome, setGoToHome] = useState(false);
 
   if(goToHome){
-    return <Navigate to="/getContacts" />;
+    return <Navigate to="/dashboard" />;
   }
 
   const handleSendData = (e)=>{
@@ -66,7 +66,7 @@ function Login( { handleLogin, setSaveToken, isLogin } ) {
     </form>
  
     <div>
-      <h5 className="textToLogin" >Dont't have an account? <Link className="link" to="/"> Register </Link> </h5>
+      <h5 className="textToLogin" >Dont't have an account? <Link className="link" to="/register"> Register </Link> </h5>
     </div>
     </article>
    </section>
