@@ -290,3 +290,8 @@ server.post("/login", async (req, res) => {
     console.log("failed conection");
   }
 });
+
+
+const staticServer = "./src/public-react";
+server.use(express.static(staticServer));
+
