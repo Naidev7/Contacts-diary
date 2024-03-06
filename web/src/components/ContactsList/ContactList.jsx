@@ -1,6 +1,11 @@
+/* eslint-disable no-inner-declarations */
 import Contacts from "./Contacts";
+import getContacts from "../../services/getContacts";
+import { useEffect } from "react";
 
-function ContactList({ searchContacts, setFiltered }) {
+function ContactList({ searchContacts, setFiltered, saveToken }) {
+
+
   return (
     <section className="section">
 
@@ -18,7 +23,7 @@ function ContactList({ searchContacts, setFiltered }) {
           type="search"
           name="search"
           placeholder="Filtrar contactos por nombre"
-          onChange={(ev) => SetFiltered(ev.target.value)}
+          onChange={(ev) => setFiltered(ev.target.value)}
         />
         <i className="fa-solid fa-magnifying-glass section__form__icon"></i>
       </form>
