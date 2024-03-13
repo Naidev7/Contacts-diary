@@ -3,21 +3,32 @@ import Contacts from "./Contacts";
 import getContacts from "../../services/getContacts";
 import { useEffect, useState } from "react";
 import AddNewC from "../AddNewContact/AddNewC";
+import { set } from "mongoose";
 
 
 function ContactList( {saveToken} ) {
 
-  const [dataContacts, setDataContacts] = useState([])
-
+  const [dataContacts, setDataContacts] = useState([]);
   useEffect(()=>{
     const getData = ()=>{
       getContacts(saveToken).then((data)=>{
-        console.log('data contacts: ', data.data)
+/*         console.log('data contacts: ', data.data) */
         setDataContacts(data.data)
       })
     }
     getData()
-  }, [])
+  }, []);
+
+  const [create, setCreate ]= useState(false);
+  const handleCreate = (e)=>{
+    e.preventDefault();
+    
+    if(create === true){
+      setCreate(false)
+    }else{
+      setCreate(true)
+    }
+  }
 
   return (
     <section className="section">
@@ -37,8 +48,12 @@ function ContactList( {saveToken} ) {
         />
         <i className="fa-solid fa-magnifying-glass section__form__icon"></i>
       </form>
-
-      {<AddNewC/>}
+   
+    <button onClick={handleCreate} className="createContainer">
+    <i className="fa-solid fa-plus createIcon"></i>
+    </button>
+      { create ? <AddNewC saveToken={saveToken}/> : null}
+    
 
       <ul className="containerContacts">
         {dataContacts.map((eachContact)=>{

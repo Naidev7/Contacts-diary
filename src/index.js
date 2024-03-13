@@ -54,7 +54,7 @@ const verifyToken = (token) => {
 const authenticateToken = (req, res, next) => {
 
   const tokenBarrer = req.headers["authorization"];
-  console.log(tokenBarrer);
+/*   console.log('tokenBarrer', tokenBarrer); */
 
   const token = tokenBarrer.split(" ")[1]; //separate token, eliminate barrer and save token
 
@@ -104,8 +104,8 @@ server.get("/getContacts", authenticateToken, async (req, res) => {
 
 //add contacts endpoint: create
 server.post("/addContacts", authenticateToken, async (req, res) => {
+  console.log('que me llega? ', req.body)
   try {
-
     const { name, telf, email } = req.body;
 
     const userId = req.user.id;
@@ -120,7 +120,7 @@ server.post("/addContacts", authenticateToken, async (req, res) => {
         relator: userId
       });
 
-      res.status(200).json({ success: true, msj: "Added correctly" });
+      res.status(200).json({ success: true, msj: "Added correctly", data: newContact });
       console.log("added correctly");
     } else {
       res

@@ -76,9 +76,7 @@ function App() {
             />
           }
         />
-         </Routes>
-
-         <Routes>
+      
         <Route
           path="/dashboard"
           element={
