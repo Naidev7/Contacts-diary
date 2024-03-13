@@ -1,0 +1,51 @@
+.navHeader{
+display: flex;
+flex-direction: column;
+margin-top: 20px;
+}
+.titleProject{
+    text-align: center;
+    margin-left: 40vw;
+}
+.menuIcon{
+    font-size: 40px;
+    margin-left: 80vw;
+    cursor: pointer;
+    position: relative;
+    color:purple;
+}
+
+.ulMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 70vw;
+    margin-top: 15px;
+    background: -webkit-linear-gradient(#fffeaa6b, #283a934e);
+    margin-right: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    gap: 15px;
+    width: 300px;
+}
+
+.menuLinks{
+    text-decoration: none;
+    color: rgb(87, 87, 87);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.liMenu{
+    list-style: none;
+    text-align: center;
+    padding:4px;
+}
+.liMenu:hover{
+    background-color: rgba(245, 245, 245, 0.379);
+    border-radius: 12px;
+    
+}
+.hidden{
+    display: none;
+}

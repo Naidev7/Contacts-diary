@@ -1,37 +1,27 @@
 import "../styles/_App.scss";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import ContactsList from "../components/ContactsList/ContactList";
-import data from "../services/data.json";
-import AddNewC from "../components/AddNewContact/AddNewC";
 import Registrer from "../components/Registrer/Registrer";
 import Login from "../components/Login/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Landing from "../components/Landing"
 
 function App() {
+
+  let locationPath = useLocation();
+  const { pathname } = locationPath;
+
+
   /* Filter contacts */
-  const [dataContacts, setDataContacts] = useState(data);
-  const [filterd, SetFiltered] = useState("");
+
+/*   const [filterd, SetFiltered] = useState("");
   const searchContacts = dataContacts.filter((contact) => {
     return contact.name.toLowerCase().includes(filterd.toLowerCase());
   });
+ */
 
-  /* Add contacts */
-  const [newCotact, setNewContact] = useState([]);
-  const handleAddContacts = (key, value) => {
-    setNewContact({ ...newCotact, [key]: value });
-  };
-  const handleContacts = () => {
-    const persona = {
-      name: newCotact.name,
-      lastname: newCotact.lastname,
-      phone: newCotact.phone,
-      email: newCotact.email,
-    };
-    setDataContacts([...dataContacts, persona]);
-  };
 
   /* Registrer users */
   const [registrer, setRegistrer] = useState({});
@@ -59,8 +49,9 @@ function App() {
 
   return (
     <div className="">
-      <Navigation />
 
+      { pathname !== '/dashboard' ? <Navigation /> : null }
+      
       <Routes>
         <Route index element={<Landing/>} />
 
@@ -85,29 +76,20 @@ function App() {
             />
           }
         />
+         </Routes>
 
+         <Routes>
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute saveToken={saveToken}>
               {/* component extra verifica y da acceso */}
-
-              <ContactsList
-                searchContacts={searchContacts}
-                SetFiltered={SetFiltered}
+            
+              <ContactsList saveToken={saveToken}
+                
               />
 
             </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/addContact"
-          element={
-            <AddNewC
-              handleAddContacts={handleAddContacts}
-              handleContacts={handleContacts}
-            />
           }
         />
       </Routes>
@@ -116,23 +98,38 @@ function App() {
 }
 
 function Navigation() {
+  const [ isOpen, setIsOpen ] = useState(false)
+  const handleMenu = ()=>{
+
+    if(isOpen){
+      setIsOpen(false)
+    } else (
+      setIsOpen(true)
+    )
+
+   
+  }
+
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Landing </Link>
+    <nav className="navHeader">
+
+      <i className="fa-solid fa-bars menuIcon" onMouseEnter={handleMenu}></i>
+      
+      <ul className={`ulMenu ${isOpen === false ? 'hidden' : null} `}>
+        <li className="liMenu">
+          <Link to="/" className="menuLinks">Landing </Link>
         </li>
 
-        <li>
-          <Link to="/register">Register </Link>
+        <li className="liMenu">
+          <Link to="/register" className="menuLinks">Register </Link>
         </li>
 
-        <li>
-          <Link to="/login">Login </Link>
+        <li className="liMenu">
+          <Link to="/login" className="menuLinks">Login </Link>
         </li>
 
-        <li>
-          <Link to="/dashboard">Dashboard </Link>
+        <li className="liMenu">
+          <Link to="/dashboard" className="menuLinks">Dashboard </Link>
         </li>
       </ul>
     </nav>

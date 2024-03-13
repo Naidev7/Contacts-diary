@@ -52,6 +52,7 @@ const verifyToken = (token) => {
 
 //middleware
 const authenticateToken = (req, res, next) => {
+
   const tokenBarrer = req.headers["authorization"];
   console.log(tokenBarrer);
 
@@ -78,7 +79,9 @@ const authenticateToken = (req, res, next) => {
 //all contacts endpoint: read
 server.get("/getContacts", authenticateToken, async (req, res) => {
   try {
-    const contactsList = await Contacts.find();
+   
+    const userId = req.user.id;
+    const contactsList = await Contacts.find( {relator: userId} );
 
     if (!contactsList) {
       // exist contacts?
@@ -215,7 +218,7 @@ server.post("/deleteContact", authenticateToken, async (req, res) => {
 });
 
 server.post("/registrer", async (req, res) => {
-  console.log(req.body);
+ /*  console.log(req.body); */
   try {
     const { name, email, adress, password } = req.body;
     const isRegistrer = Users.findOne({ email: email });
@@ -254,28 +257,28 @@ server.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const isLoged = await Users.findOne({ email: email });
-    console.log('isloged? ', isLoged)
+  /*   console.log('isloged? ', isLoged) */
 
     if (!isLoged) {
       res.status(400).json({ success: false, msj: "User not found" });
     }
 
     const matchPassword = await bcrypt.compare(password, isLoged.password); //compare password
-    console.log('matchPass? ', matchPassword)
-
+    /* console.log('matchPass? ', matchPassword)
+ */
     if (matchPassword) {
       //passsword is ok?
       const infoToken = {
         email: isLoged.email,
         id: isLoged.id,
       };
-      console.log('infoToken? ', infoToken)
+/*       console.log('infoToken? ', infoToken) */
 
       const token = generateToken(infoToken);
-      console.log('token? ', token)
+   /*    console.log('token? ', token) */
       
       res.status(200).json({ success: true, token: token });
-      console.log("token: ", token);
+/*       console.log("token: ", token); */
     } else {
       res
         .status(400)

@@ -1,17 +1,29 @@
 
 import Contacts from "./Contacts";
+import getContacts from "../../services/getContacts";
+import { useEffect, useState } from "react";
+import AddNewC from "../AddNewContact/AddNewC";
 
 
-function ContactList({ searchContacts, setFiltered }) {
+function ContactList( {saveToken} ) {
+
+  const [dataContacts, setDataContacts] = useState([])
+
+  useEffect(()=>{
+    const getData = ()=>{
+      getContacts(saveToken).then((data)=>{
+        console.log('data contacts: ', data.data)
+        setDataContacts(data.data)
+      })
+    }
+    getData()
+  }, [])
 
   return (
     <section className="section">
 
       <header className="header">
       </header>
-      <section className="profile">
-          <img className="profile__img" src="/public/profilePicture.avif" alt="#" />
-        </section>
 
       <form className="section__form">
       <h1 className="section__form__title">My contacts</h1>
@@ -26,10 +38,12 @@ function ContactList({ searchContacts, setFiltered }) {
         <i className="fa-solid fa-magnifying-glass section__form__icon"></i>
       </form>
 
-      <ul className="container">
-        {searchContacts.map((contact, i) => (
-          <Contacts key={i} searchContacts={contact} />
-        ))}
+      {<AddNewC/>}
+
+      <ul className="containerContacts">
+        {dataContacts.map((eachContact)=>{
+         return <Contacts key={eachContact.id} eachContact={eachContact} />
+        })}
       </ul>
 
     </section>
