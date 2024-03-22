@@ -41,7 +41,7 @@ function Login( { handleLogin, setSaveToken, isLogin } ) {
 
    <section className="container">
       <article className="hero">
-        <img src="../../public/singinImg.png" alt="#" />
+        <img src="https://www.seqrite.com/skin/frontend/default/seqrite_v1/images/support-img.png" alt="#" />
     </article>
 
     <article className="register login">
@@ -55,9 +55,9 @@ function Login( { handleLogin, setSaveToken, isLogin } ) {
 
     <label htmlFor="password">
       <input type="text" id="password" onChange={handleValueToLogin} placeholder="Enter your password" className="form__input form__pass" />
-      <button>
+{/*       <button>
     <i className="fa-solid fa-eye-slash form__icon"></i>
-    </button>
+    </button> */}
     </label>
 
     <button className="form__btn">
@@ -66,7 +66,7 @@ function Login( { handleLogin, setSaveToken, isLogin } ) {
     </form>
  
     <div>
-      <h5 className="textToLogin" >Dont't have an account? <Link className="link" to="/register"> Register </Link> </h5>
+      <h5 className="textToLogin" >Dont't have an account? <Link className="link" to="/"> Register </Link> </h5>
     </div>
     </article>
    </section>

@@ -33,7 +33,7 @@ function Registrer({ handleUsers, handleAddUser, registrer }) {
   return (
     <section className="container">
     <article className="hero">
-        <img src="../../public/signupImg.png" alt="#" />
+        <img src="https://www.seqrite.com/skin/frontend/default/seqrite_v1/images/support-img.png" alt="#" />
     </article>
       <article className="register">
         <h1 className="register__title">Register</h1>

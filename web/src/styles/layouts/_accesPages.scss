@@ -37,7 +37,7 @@
     background: -webkit-linear-gradient(#fffeaa, #283a93);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 44px;
+    font-size: 30px;
   }
   &__subtitle {
     font-size: 12px;
@@ -58,7 +58,6 @@
     border-image: linear-gradient(to right, #98986f ,rgb(147, 56, 147) , #2552ad) 1;
     padding: 10px;
     text-align: center;
-    text-transform: capitalize;
     font-size: 12px;
   }
   &__btn{

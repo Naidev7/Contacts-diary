@@ -3,7 +3,7 @@ import Contacts from "./Contacts";
 import getContacts from "../../services/getContacts";
 import { useEffect, useState } from "react";
 import AddNewC from "../AddNewContact/AddNewC";
-import { set } from "mongoose";
+
 
 
 function ContactList( {saveToken} ) {
@@ -37,7 +37,7 @@ function ContactList( {saveToken} ) {
       </header>
 
       <form className="section__form">
-      <h1 className="section__form__title">My contacts</h1>
+      <h1 className="section__form__title">Connect Sphere</h1>
         <input
           className="section__form__input"
           autoComplete="off"
@@ -57,7 +57,7 @@ function ContactList( {saveToken} ) {
 
       <ul className="containerContacts">
         {dataContacts.map((eachContact)=>{
-         return <Contacts key={eachContact.id} eachContact={eachContact} />
+         return <Contacts key={eachContact.id} eachContact={eachContact} saveToken={saveToken} />
         })}
       </ul>
 

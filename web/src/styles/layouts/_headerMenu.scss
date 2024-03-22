@@ -1,20 +1,29 @@
 .navHeader{
 display: flex;
-flex-direction: column;
-margin-top: 20px;
+justify-content: space-around;
+
 }
 .titleProject{
     text-align: center;
     margin-left: 40vw;
 }
 .menuIcon{
-    font-size: 40px;
-    margin-left: 80vw;
+    font-size: 30px;
     cursor: pointer;
     position: relative;
-    color:purple;
+    top: 60px;
+    color:rgba(128, 0, 128, 0.515);
 }
-
+.menuTitle{
+    text-align: center;
+    margin-top: 40px;
+    font-weight: 800;
+    line-height: 1.5cm;
+    background: -webkit-linear-gradient(#fffeaa, #283a93);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 44px;
+}
 .ulMenu{
     display: flex;
     flex-direction: column;
@@ -27,6 +36,7 @@ margin-top: 20px;
     border-radius: 15px;
     gap: 15px;
     width: 300px;
+    animation: ease-in 800ms;
 }
 
 .menuLinks{

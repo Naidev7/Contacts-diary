@@ -2,7 +2,9 @@
 
 function Landing() {
   return (
-    <div>Landing</div>
+    <section>
+      <img src="/landing.png" alt="" />
+    </section>
   )
 }
 

@@ -14,14 +14,6 @@ function App() {
   const { pathname } = locationPath;
 
 
-  /* Filter contacts */
-
-/*   const [filterd, SetFiltered] = useState("");
-  const searchContacts = dataContacts.filter((contact) => {
-    return contact.name.toLowerCase().includes(filterd.toLowerCase());
-  });
- */
-
 
   /* Registrer users */
   const [registrer, setRegistrer] = useState({});
@@ -53,10 +45,10 @@ function App() {
       { pathname !== '/dashboard' ? <Navigation /> : null }
       
       <Routes>
-        <Route index element={<Landing/>} />
+   {/*      <Route index element={<Landing/>} /> */}
 
         <Route
-          path="/register"
+          path="/"
           element={
             <Registrer
               handleUsers={handleUsers}
@@ -109,11 +101,12 @@ function Navigation() {
   }
 
   return (
+    <>
     <nav className="navHeader">
-
-      <i className="fa-solid fa-bars menuIcon" onMouseEnter={handleMenu}></i>
-      
-      <ul className={`ulMenu ${isOpen === false ? 'hidden' : null} `}>
+      <h1 className="menuTitle"> ConnectSphere</h1>
+      <i className="fa-solid fa-bars menuIcon" onClick={handleMenu}></i>
+    </nav>
+    <ul className={`ulMenu ${isOpen === false ? 'hidden' : null} `}>
         <li className="liMenu">
           <Link to="/" className="menuLinks">Landing </Link>
         </li>
@@ -130,7 +123,7 @@ function Navigation() {
           <Link to="/dashboard" className="menuLinks">Dashboard </Link>
         </li>
       </ul>
-    </nav>
+    </>
   );
 }
 
